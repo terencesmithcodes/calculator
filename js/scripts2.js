@@ -64,7 +64,8 @@ for (let i=0; i < operators.length; i++){
           //-1 because we want to look at the previous opperator not the last opperator pressed
           calculation(arrOper[arrOper.length - 2])
       }
-       console.log(arrOper)  
+      equalFlag = false
+    //    console.log(arrOper)  
   })
 }
 
