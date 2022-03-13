@@ -17,10 +17,14 @@ result.addEventListener('click', equals)
 for (let i=0; i < numbers.length; i++){
     numbers[i].addEventListener("click", function (event) {
         //console.log(event.target.innerHTML)
-        if (operFlag) {
+        if (operFlag || equalFlag) {
             operFlag = false
             decimalFlag = false
             input.innerHTML = ""
+            if (equalFlag) {
+                equalFlag = false
+                arrNums = []
+            }
         }
       if (event.target.innerHTML == "C") {
         arrNums = []
@@ -40,19 +44,22 @@ for (let i=0; i < numbers.length; i++){
   })
 }
 
+//operators
+
 for (let i=0; i < operators.length; i++){
   operators[i].addEventListener("click", function(event) {
-      console.log(event.target.innerHTML)
+    //   console.log(event.target.innerHTML)
       
       if (!operFlag && input.innerHTML != "" && input.innerHTML != ".") {
           arrOper.push(operators[i].innerHTML)
           operFlag = true
-          let floatNum = parseFloat(input.innerHTML)
-          arrNums.push(floatNum)
+          if (!equalFlag) {
+              let floatNum = parseFloat(input.innerHTML)
+              arrNums.push(floatNum)
+          }
       }
 
       if (arrNums.length == 2) {
-          console.log('calculate')
           //-1 because length is one greater than index
           //-1 because we want to look at the previous opperator not the last opperator pressed
           calculation(arrOper[arrOper.length - 2])
@@ -66,19 +73,21 @@ function equals() {
         //if a return is called nothing below the return in function runs
         return 
     }
-    if (arrNums.length = 0 && input.innerHTML != "" && input.innerHTML != ".") {
+    if (arrNums.length == 0 && input.innerHTML != "" && input.innerHTML != ".") {
         let floatNum = parseFloat(input.innerHTML)
         arrNums.push(floatNum)
-        console.log(`equals 0 arrNums: ${arrNums}`)
+        // console.log(`equals 0 arrNums: ${arrNums}`)
         equalFlag = true
     }
-    else if (arrNums.length = 1 && input.innerHTML != "" && input.innerHTML != ".") {
-        console.log(`equals before arrNums: ${arrNums}`)
+    else if (arrNums.length == 1 && input.innerHTML != "" && input.innerHTML != ".") {
+        // console.log(`equals before arrNums: ${arrNums}`)
         let floatNum = parseFloat(input.innerHTML)
         arrNums.push(floatNum)
-        console.log(`equals arrNums ${arrNums}`)
+        // console.log(`equals arrNums ${arrNums}`)
         equalFlag = true
-        // calculation(arrOper[arrOper.length - 1])
+        operFlag = false
+        //-1 because length is one greater than index
+        calculation(arrOper[arrOper.length - 1]) 
     }
 }
 
@@ -103,4 +112,4 @@ function calculation(operator) {
 
 
 
-console.log(numbers)
+// console.log(numbers)
